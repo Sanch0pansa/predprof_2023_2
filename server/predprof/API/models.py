@@ -33,4 +33,3 @@ class Resources(models.Model):
     oxygen = models.IntegerField()
     nuclear_fuel_cost = models.IntegerField()
     oxygen_cost = models.IntegerField()
-    day = models.ForeignKey(Day, on_delete=models.CASCADE, related_name='resources')
