@@ -1,10 +1,10 @@
 from math import *
 
-import requests
-
-headers = {'X-Auth-Token': '7vt3qmhc'}
-Import = requests.get('https://dt.miet.ru/ppo_it_final', headers=headers)
-Import: list = Import.json()
+# import requests
+#
+# headers = {'X-Auth-Token': '7vt3qmhc'}
+# Import = requests.get('https://dt.miet.ru/ppo_it_final', headers=headers)
+# Import: list = Import.json()
 
 class Ship:
     def __init__(self, count_SH=8, count_fuel=0, count_Oxi=0):
