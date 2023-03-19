@@ -3,17 +3,15 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.views import TokenObtainPairView
-
-from .models import User
-from .serializers import UserSerializer, MyTokenObtainPairSerializer
+from django.http import JsonResponse
+import requests
 
 
-class UserRegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
+class getData(generics.GenericAPIView):
     permission_classes = [AllowAny]
-    serializer_class = UserSerializer
 
+    def get(self, request):
+        headers = {'X-Auth-Token': '7vt3qmhc'}
+        response = requests.get('https://dt.miet.ru/ppo_it_final', headers=headers)
+        return JsonResponse(response.json(), safe=False)
 
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
