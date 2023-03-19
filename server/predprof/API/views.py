@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from API.models import Day, Waypoint
+from API.models import Day, Waypoint, Resources
 from API.serializers import DaySerializer
-from rest_framework import generics, status
+from rest_framework import generics
 from django.http import JsonResponse
 import requests
 
@@ -12,8 +12,13 @@ class get_init_waypoints(generics.GenericAPIView):
         Waypoint.objects.all().delete()
         headers = {'X-Auth-Token': '7vt3qmhc'}
         response = requests.get('https://dt.miet.ru/ppo_it_final', headers=headers)
-        for i in response.json()['message']:
-            Waypoint.objects.create(distance=i['points'][0]['distance'], amount=i['points'][0]['SH'])
+        for i in response.json()['message'][0]['points']:
+            Waypoint.objects.create(distance=i['distance'], SH=i['SH'])
+        # for i in response.json()['message']:
+        #     for j in i['points'][]:
+        #         print(i['points'])
+        #         Waypoint.objects.create(distance=j['distance'], SH=j['SH'])
+        #     pass
         return JsonResponse(response.json(), safe=False)
 
 
@@ -29,11 +34,21 @@ class get_waypoints(generics.GenericAPIView):
         return JsonResponse(list(waypoints), safe=False)
 
 
-# class get_consumptions(generics.GenericAPIView):
-#
-#
-#     def get(self, request):
-#         {
-#             'resources': {...}
-#             'waypoints': [{'':}]
-#         }
+class get_consumptions(generics.GenericAPIView):
+
+
+    def get(self, request):
+        resources = list(Resources.objects.all().values())
+        days = list(Day.objects.all().values())
+        res = {
+            'resources': resources,
+            'days': days
+        }
+        return JsonResponse(res, safe=False)
+
+
+class get_cals(generics.GenericAPIView):
+
+
+    def get(self, request):
+        pass
