@@ -89,6 +89,15 @@ class get_calcs(generics.GenericAPIView):
 
             for i in range(t):
                 sh = 8 + 8 * (i + 1)
+                raspisanie.append({'fuel_consumption': w,
+                                   'engine_consumption': w - e,
+                                   'elecricity_consumption': e,
+                                   'elecricity': 11 * e,
+                                   'ship_mass': 192 + sh,
+                                   'oxygen_consumption': oxi * sh,
+                                   'SH_start': raspisanie[-1]['SH_end'],
+                                   'SH_end': sh,
+                                   'temperature': temp})
                 Day.objects.create(fuel_consumption=w,
                                    engine_consumption=w - e,
                                    electricity_consumption=e,
@@ -100,5 +109,5 @@ class get_calcs(generics.GenericAPIView):
                                    temperature=temp,
                                    waypoint_id=n)
 
-        return JsonResponse(True ,safe=False)
+        return JsonResponse(True, safe=False)
 
