@@ -5,13 +5,14 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class User(AbstractUser):
     pass
 
 
 class Waypoint(models.Model):
     distance = models.IntegerField()
-    amount = models.IntegerField()
+    SH = models.IntegerField()
 
 
 class Day(models.Model):
@@ -24,4 +25,12 @@ class Day(models.Model):
     SH_start = models.IntegerField()
     SH_end = models.IntegerField()
     temperature = models.IntegerField()
-    waypoint = models.ForeignKey(Waypoint, on_delete=models.CASCADE, related_name='day')
+    waypoint = models.ForeignKey(Waypoint, on_delete=models.CASCADE, related_name='days')
+
+
+class Resources(models.Model):
+    nuclear_fuel = models.IntegerField()
+    oxygen = models.IntegerField()
+    nuclear_fuel_cost = models.IntegerField()
+    oxygen_cost = models.IntegerField()
+    day = models.ForeignKey(Day, on_delete=models.CASCADE, related_name='resources')
