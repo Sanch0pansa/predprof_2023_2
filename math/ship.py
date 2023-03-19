@@ -11,6 +11,9 @@ class Ship:
     def calculate_SH_new_day(self, G0, Kp):
         Gn = G0 + G0 * Kp
         self.Mass = self.Mass - G0 + Gn
+        if Gn < 8:
+            raise Exception(f'Critical count SH ({Gn})')
+
         return Gn
 
     def calculate_Kp(self, T, Oxi):
@@ -26,6 +29,11 @@ class Ship:
     def calculate_V_to_new_day(self, W, M):
         if W > 80:
             raise Exception(f'No W > 80 ({W})')
-        self.count_fuel -= W
         Vmax = 2
         return Vmax * (W / 80) * (200 / M)
+
+    def calculate_sum_fuel(self, W, T):
+        E = self.calculate_Enegry(T)
+        fuel_of_day = W + E * 11
+        self.count_fuel -= fuel_of_day
+        return fuel_of_day
